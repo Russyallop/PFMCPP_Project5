@@ -67,6 +67,7 @@ send me a DM to check your pull request
 
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 #define PASSENGER_COEFF 0.0000005
@@ -77,24 +78,25 @@ using namespace std;
 class Car
 {
 public:
-    Car() : speed(0), passengers(0){}
-    Car(double speed, int passengers) : speed(speed), passengers(passengers)
+    Car() : name(""), speed(0), passengers(0){}
+    Car(string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(int i=0;i<passengers;i++)
         {
             passengerRiskArray.push_back(0);
         }
-        cout<<"Car created"<<endl;
+        cout<<name<<" was created"<<endl;
     }
     ~Car()
     {
-        cout<<"Car destroyed"<<endl;
+        cout<<name<<" was destroyed"<<endl;
     }
     double getSpeed();
     void calculateAndPrintRisk();
     
 private:
-    int speed;
+    string name;
+    double speed;
     int passengers;
     vector<double> passengerRiskArray;
     vector<double> riskCoeffArray = { 0.5, 0.7, 0.8, 0.8, 0.9};
@@ -115,24 +117,25 @@ void Car::calculateAndPrintRisk()
 class Motorbike
 {
 public:
-    Motorbike() : speed(0), passengers(0){}
-    Motorbike(double speed, int passengers) : speed(speed), passengers(passengers)
+    Motorbike() : name(""), speed(0), passengers(0){}
+    Motorbike(string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(int i=0;i<passengers;i++)
         {
             passengerRiskArray.push_back(0);
         }
-        cout<<"Motorbike created"<<endl;
+        cout<<name<<" was created"<<endl;
     }
     ~Motorbike()
     {
-        cout<<"Motorbike destroyed"<<endl;
+        cout<<name<<" was destroyed"<<endl;
     }
     double getSpeed();
     void calculateAndPrintRisk();
     
     
 private:
+    string name;
     int speed;
     int passengers;
     vector<double> passengerRiskArray;
@@ -154,24 +157,25 @@ void Motorbike::calculateAndPrintRisk()
 class Lorry
 {
 public:
-    Lorry() : speed(0), passengers(0){}
-    Lorry(double speed, int passengers) : speed(speed), passengers(passengers)
+    Lorry() : name(""), speed(0), passengers(0){}
+    Lorry(string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(int i=0;i<passengers;i++)
         {
             passengerRiskArray.push_back(0);
         }
-        cout<<"Lorry created"<<endl;
+        cout<<name<<" was created"<<endl;
     }
     ~Lorry()
     {
-        cout<<"Lorry destroyed"<<endl;
+        cout<<name<<" was destroyed"<<endl;
     }
     double getSpeed();
     void calculateAndPrintRisk();
 
 private:
-    int speed;
+    string name;
+    double speed;
     int passengers;
     vector<double> passengerRiskArray;
     vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
@@ -202,9 +206,9 @@ public:
     {
         cout<<"MotorWay destroyed"<<endl;
     }
-    void addCar(Car& car);
-    void addMotorBike(Motorbike& motorbike);
-    void addLorry(Lorry& lorry);
+    void addCar(Car* car);
+    void addMotorBike(Motorbike* motorbike);
+    void addLorry(Lorry* lorry);
     void calculateAndPrintChanceOfAccident();
     
 private:
@@ -215,17 +219,17 @@ private:
     double chanceOfAccident;
     
 };
-void Motorway::addCar(Car& car)
+void Motorway::addCar(Car* car)
 {
-    carsArray.push_back(car);
+    carsArray.push_back(*car);
 }
-void Motorway::addMotorBike(Motorbike& motorbike)
+void Motorway::addMotorBike(Motorbike* motorbike)
 {
-    motorbikesArray.push_back(motorbike);
+    motorbikesArray.push_back(*motorbike);
 }
-void Motorway::addLorry(Lorry& lorry)
+void Motorway::addLorry(Lorry* lorry)
 {
-    lorriesArray.push_back(lorry);
+    lorriesArray.push_back(*lorry);
 }
 void Motorway::calculateAndPrintChanceOfAccident()
 {
@@ -256,24 +260,24 @@ void Motorway::calculateAndPrintChanceOfAccident()
             cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per hour" << endl;
 }
 int main() {
-    Car ford(70,3);
-    Motorbike harley(80,2);
-    Motorbike ducati(110,2);
-    Lorry bedford(50,3);
-    Car ferrari(90,1);
-    Car vwGolf(65,5);
+    Car ford("ford",70,3);
+    Motorbike harley("harley",80,2);
+    Motorbike ducati("ducati",110,2);
+    Lorry bedford("bedford",50,3);
+    Car ferrari("ferrari",90,1);
+    Car vwGolf("vwGolf",65,5);
 
     ford.calculateAndPrintRisk();
     harley.calculateAndPrintRisk();
     bedford.calculateAndPrintRisk();
     
     Motorway motorway;
-    motorway.addCar(ford);
-    motorway.addCar(ferrari);
-    motorway.addCar(vwGolf);
-    motorway.addMotorBike(harley);
-    motorway.addMotorBike(ducati);
-    motorway.addLorry(bedford);
+    motorway.addCar(&ford);
+    motorway.addCar(&ferrari);
+    motorway.addCar(&vwGolf);
+    motorway.addMotorBike(&harley);
+    motorway.addMotorBike(&ducati);
+    motorway.addLorry(&bedford);
     motorway.calculateAndPrintChanceOfAccident();
     return 0;
 }
