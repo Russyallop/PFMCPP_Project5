@@ -79,9 +79,9 @@ class Car
 {
 public:
     
-    Car(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Car(std::string name_, double speed_) : name(name_), speed(speed_) 
     {
-        for(size_t i = 0; i < passengers; ++i)
+        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -97,7 +97,6 @@ public:
 private:
     std::string name{""};
     double speed{0};
-    unsigned long passengers{0};
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = {0.5, 0.7, 0.8, 0.8, 0.9};
     
@@ -108,9 +107,9 @@ double Car::getSpeed()
 }
 void Car::calculateAndPrintRisk()
 {
-    for(size_t i = 0; i < passengers; ++i)
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
-        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengers * PASSENGER_COEFF;
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
         std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
     }
 }
@@ -118,9 +117,9 @@ class Motorbike
 {
 public:
     
-    Motorbike(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Motorbike(std::string name_, double speed_) : name(name_), speed(speed_)
     {
-        for(size_t i = 0; i < passengers; ++i)
+        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -137,7 +136,6 @@ public:
 private:
     std::string name{""};
     double speed{0};
-    unsigned long passengers{0};
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 1.85, 1.95};
     
@@ -148,9 +146,9 @@ double Motorbike::getSpeed()
 }
 void Motorbike::calculateAndPrintRisk()
 {
-    for(size_t i = 0; i < passengers; ++i)
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
-        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengers * PASSENGER_COEFF;
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
         std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
     }
 }
@@ -158,9 +156,9 @@ class Lorry
 {
 public:
     
-    Lorry(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Lorry(std::string name_, double speed_) : name(name_), speed(speed_)
     {
-        for(size_t i = 0; i < passengers; ++i)
+        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -176,7 +174,6 @@ public:
 private:
     std::string name{""};
     double speed{0};
-    unsigned long passengers{0};
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
     
@@ -187,9 +184,9 @@ double Lorry::getSpeed()
 }
 void Lorry::calculateAndPrintRisk()
 {
-    for(size_t i = 0; i < passengers; ++i)
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
-        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengers * PASSENGER_COEFF;
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
         std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
     }
 }
@@ -260,12 +257,12 @@ void Motorway::calculateAndPrintChanceOfAccident()
             std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per hour" << std::endl;
 }
 int main() {
-    Car ford("ford", 70, 3);
-    Motorbike harley("harley", 80, 2);
-    Motorbike ducati("ducati", 110, 2);
-    Lorry bedford("bedford", 50, 3);
-    Car ferrari("ferrari", 90, 1);
-    Car vwGolf("vwGolf", 65, 5);
+    Car ford("ford", 70);
+    Motorbike harley("harley", 80);
+    Motorbike ducati("ducati", 110);
+    Lorry bedford("bedford", 50);
+    Car ferrari("ferrari", 90);
+    Car vwGolf("vwGolf", 65);
 
     ford.calculateAndPrintRisk();
     harley.calculateAndPrintRisk();
