@@ -42,7 +42,7 @@ namespace Example
 		{ 
             // 2b) explicitly using 'this' inside this member function.
 			std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl; 
-		}  
+		}
 		
         int returnValue() { return 3; }
         float memberVariable = 3.14f;
