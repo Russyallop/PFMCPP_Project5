@@ -79,9 +79,9 @@ class Car
 {
 public:
     
-    Car(std::string name_, double speed_) : name(name_), speed(speed_) 
+    Car(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_) 
     {
-        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+        for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -97,6 +97,7 @@ public:
 private:
     std::string name{""};
     double speed{0};
+    int passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = {0.5, 0.7, 0.8, 0.8, 0.9};
     
@@ -117,9 +118,9 @@ class Motorbike
 {
 public:
     
-    Motorbike(std::string name_, double speed_) : name(name_), speed(speed_)
+    Motorbike(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
-        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+        for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -136,6 +137,7 @@ public:
 private:
     std::string name{""};
     double speed{0};
+    int passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 1.85, 1.95};
     
@@ -156,9 +158,9 @@ class Lorry
 {
 public:
     
-    Lorry(std::string name_, double speed_) : name(name_), speed(speed_)
+    Lorry(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
-        for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+        for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
@@ -174,6 +176,7 @@ public:
 private:
     std::string name{""};
     double speed{0};
+    int passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
     
@@ -257,12 +260,12 @@ void Motorway::calculateAndPrintChanceOfAccident()
             std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per hour" << std::endl;
 }
 int main() {
-    Car ford("ford", 70);
-    Motorbike harley("harley", 80);
-    Motorbike ducati("ducati", 110);
-    Lorry bedford("bedford", 50);
-    Car ferrari("ferrari", 90);
-    Car vwGolf("vwGolf", 65);
+    Car ford("ford", 70,3);
+    Motorbike harley("harley", 80,2);
+    Motorbike ducati("ducati", 110,1);
+    Lorry bedford("bedford", 50,1);
+    Car ferrari("ferrari", 90,2);
+    Car vwGolf("vwGolf", 65,5);
 
     ford.calculateAndPrintRisk();
     harley.calculateAndPrintRisk();
