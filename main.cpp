@@ -73,7 +73,218 @@ Purpose:  This project continues developing Project3 and will take you through h
  */
 
 #include <iostream>
-int main()
+#include <vector>
+#include <string>
+
+
+#define PASSENGER_COEFF 0.0000005
+#define CAR_ON_MOTORWAY_COEFF 0.0000002
+#define MOTORBIKE_ON_MOTORWAY_COEFF 0.0000006
+#define LORRY_ON_MOTORWAY_COEFF 0.0000006
+
+class Car
 {
-    std::cout << "good to go!" << std::endl;
+public:
+    
+    Car(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_) 
+    {
+        for(size_t i = 0; i < passengers; ++i)
+        {
+            passengerRiskArray.push_back(0);
+        }
+        std::cout << name << " was created" << std::endl;
+    }
+    ~Car()
+    {
+        std::cout << name << " was destroyed" << std::endl;
+    }
+    double getSpeed();
+    void calculateAndPrintRisk();
+    
+private:
+    std::string name{""};
+    double speed{0};
+    int passengers;
+    std::vector<double> passengerRiskArray;
+    std::vector<double> riskCoeffArray = {0.5, 0.7, 0.8, 0.8, 0.9};
+    
+};
+double Car::getSpeed()
+{
+    return speed;
+}
+void Car::calculateAndPrintRisk()
+{
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+    {
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+    }
+}
+class Motorbike
+{
+public:
+    
+    Motorbike(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    {
+        for(size_t i = 0; i < passengers; ++i)
+        {
+            passengerRiskArray.push_back(0);
+        }
+        std::cout << name << " was created" << std::endl;
+    }
+    ~Motorbike()
+    {
+        std::cout << name << " was destroyed" << std::endl;
+    }
+    double getSpeed();
+    void calculateAndPrintRisk();
+    
+    
+private:
+    std::string name{""};
+    double speed{0};
+    int passengers;
+    std::vector<double> passengerRiskArray;
+    std::vector<double> riskCoeffArray = { 1.85, 1.95};
+    
+};
+double Motorbike::getSpeed()
+{
+    return speed;
+}
+void Motorbike::calculateAndPrintRisk()
+{
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+    {
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+    }
+}
+class Lorry
+{
+public:
+    
+    Lorry(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    {
+        for(size_t i = 0; i < passengers; ++i)
+        {
+            passengerRiskArray.push_back(0);
+        }
+        std::cout << name << " was created" << std::endl;
+    }
+    ~Lorry()
+    {
+        std::cout << name << " was destroyed" << std::endl;
+    }
+    double getSpeed();
+    void calculateAndPrintRisk();
+
+private:
+    std::string name{""};
+    double speed{0};
+    int passengers;
+    std::vector<double> passengerRiskArray;
+    std::vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
+    
+};
+double Lorry::getSpeed()
+{
+    return speed;
+}
+void Lorry::calculateAndPrintRisk()
+{
+    for(size_t i = 0; i < passengerRiskArray.size(); ++i)
+    {
+        passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+    }
+}
+class Motorway
+{
+public:
+
+    Motorway()
+    {
+
+        std::cout << "MotorWay created" << std::endl;
+    }
+    ~Motorway()
+    {
+        std::cout << "MotorWay destroyed" << std::endl;
+    }
+    void addCar(Car* car);
+    void addMotorBike(Motorbike* motorbike);
+    void addLorry(Lorry* lorry);
+    void calculateAndPrintChanceOfAccident();
+    
+private:
+
+    std::vector<Car> carsArray;
+    std::vector<Motorbike> motorbikesArray;
+    std::vector<Lorry> lorriesArray;
+    double chanceOfAccident;
+    
+};
+void Motorway::addCar(Car* car)
+{
+    carsArray.push_back(*car);
+}
+void Motorway::addMotorBike(Motorbike* motorbike)
+{
+    motorbikesArray.push_back(*motorbike);
+}
+void Motorway::addLorry(Lorry* lorry)
+{
+    lorriesArray.push_back(*lorry);
+}
+void Motorway::calculateAndPrintChanceOfAccident()
+{
+    double sumSpeedCars = 0;
+    for(size_t i = 0; i < carsArray.size(); ++i)
+    {
+        sumSpeedCars += carsArray[i].getSpeed();
+    }
+    double avgSpeedCars = sumSpeedCars/carsArray.size();
+    
+    double sumSpeedMotorbikes = 0;
+    for(size_t i = 0; i < motorbikesArray.size(); ++i)
+    {
+        sumSpeedMotorbikes += motorbikesArray[i].getSpeed();
+    }
+    double avgSpeedMotorbikes = sumSpeedMotorbikes/motorbikesArray.size();
+    
+    double sumSpeedLorries = 0;
+    for(size_t i = 0; i < lorriesArray.size(); ++i)
+    {
+        sumSpeedLorries += lorriesArray[i].getSpeed();
+    }
+    double avgSpeedLorries = sumSpeedLorries/lorriesArray.size();
+    
+    chanceOfAccident = avgSpeedCars * CAR_ON_MOTORWAY_COEFF +
+                        avgSpeedMotorbikes * MOTORBIKE_ON_MOTORWAY_COEFF +
+                        avgSpeedLorries * LORRY_ON_MOTORWAY_COEFF;
+            std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per hour" << std::endl;
+}
+int main() {
+    Car ford("ford", 70,3);
+    Motorbike harley("harley", 80,2);
+    Motorbike ducati("ducati", 110,1);
+    Lorry bedford("bedford", 50,1);
+    Car ferrari("ferrari", 90,2);
+    Car vwGolf("vwGolf", 65,5);
+
+    ford.calculateAndPrintRisk();
+    harley.calculateAndPrintRisk();
+    bedford.calculateAndPrintRisk();
+    
+    Motorway motorway;
+    motorway.addCar(&ford);
+    motorway.addCar(&ferrari);
+    motorway.addCar(&vwGolf);
+    motorway.addMotorBike(&harley);
+    motorway.addMotorBike(&ducati);
+    motorway.addLorry(&bedford);
+    motorway.calculateAndPrintChanceOfAccident();
+    return 0;
 }
