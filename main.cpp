@@ -39,10 +39,10 @@ namespace Example
 		
 		// 2a) the member function whose function body is almost identical to the std::cout statement in main.
         void memberFunc() 
-		{ 
+        { 
             // 2b) explicitly using 'this' inside this member function.
-			std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl; 
-		}
+            std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl; 
+        }
 		
         int returnValue() { return 3; }
         float memberVariable = 3.14f;
