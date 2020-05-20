@@ -87,6 +87,12 @@ struct Car
     {
         std::cout << name << " was destroyed" << std::endl;
     }
+
+    void memberFunc()
+    {
+            std::cout << "\nCar [Car name]: " << this->name << ", traveling at [Car getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Car passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
+    }
     
     double getSpeed();
     void calculateAndPrintRisk();
@@ -140,6 +146,12 @@ struct Motorbike
     {
         std::cout << name << " was destroyed" << std::endl;
     }
+
+    void memberFunc()
+    {
+            std::cout << "\nMotorbike [Motorbike name]: " << this->name << ", traveling at [Motorbike getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Motorbike passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
+    }
     
     double getSpeed();
     void calculateAndPrintRisk();
@@ -190,6 +202,12 @@ struct Lorry
     ~Lorry()
     {
         std::cout << name << " was destroyed" << std::endl;
+    }
+
+    void memberFunc()
+    {
+            std::cout << "\nLorry [Lorry name]: " << this->name << ", traveling at [Lorry getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Lorry passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
     }
     
     double getSpeed();
@@ -319,14 +337,18 @@ int main()
     
     std::cout << "\nCar [ford.getName()]: " << ford.getName() << ", traveling at [ford.getSpeed()]:" << ford.getSpeed() << "mph, has the following risk report when carrying [ford.getPassengers()]: " << ford.getPassengers() << " passengers: \n" << std::endl;
     ford.calculateAndPrintRisk();
+
+    ford.memberFunc();
     
     std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]:" << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
     harley.calculateAndPrintRisk();
+
+    harley.memberFunc();
     
     std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()]:" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
     bedford.calculateAndPrintRisk();
 
-    
+    bedford.memberFunc();   
 
 
     
