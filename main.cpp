@@ -1,9 +1,9 @@
 /*
-Project 5: Part 2 / 4
+ Project 5: Part 2 / 4
  video: Chapter 3 Part 1
-
-Create a branch named Part2
-
+ 
+ Create a branch named Part2
+ 
  The 'this' keyword
  
  The purpose of this project part is to show you how accessing member variables of objects INSIDE member functions is very similar to accessing member variables of objects OUTSIDE of member functions, via 'this->' and via the '.' operator.
@@ -11,15 +11,15 @@ Create a branch named Part2
  
  
  1) if you don't have any std::cout statements in main() that access member variables of your U.D.Ts
-         write some.
-    You can copy some from your Project3's main() if needed.
+ write some.
+ You can copy some from your Project3's main() if needed.
  
  2) For each std::cout statement in main() that accessed member variables of your types or printed out the results of your member function calls,
-        a) write a member function that prints the same thing out, but uses the proper techniques inside the member functions to access the same member variables/functions.
-        b) be explicit with your use of 'this->' in those member functions so we see how you're accessing/calling those member variables and functions *inside*
-        c) call that member function after your std::cout statement in main.
-        d) you should see 2 (almost) identical messages in the program output for each member function you add:
-            one for the std::cout line, and one for the member function's output
+ a) write a member function that prints the same thing out, but uses the proper techniques inside the member functions to access the same member variables/functions.
+ b) be explicit with your use of 'this->' in those member functions so we see how you're accessing/calling those member variables and functions *inside*
+ c) call that member function after your std::cout statement in main.
+ d) you should see 2 (almost) identical messages in the program output for each member function you add:
+ one for the std::cout line, and one for the member function's output
  
  
  3) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
@@ -36,14 +36,14 @@ namespace Example
     {
         MyFoo() { std::cout << "creating MyFoo" << std::endl; }
         ~MyFoo() { std::cout << "destroying MyFoo" << std::endl; }
-		
-		// 2a) the member function whose function body is almost identical to the std::cout statement in main.
-        void memberFunc() 
-        { 
+        
+        // 2a) the member function whose function body is almost identical to the std::cout statement in main.
+        void memberFunc()
+        {
             // 2b) explicitly using 'this' inside this member function.
-            std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl; 
+            std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl;
         }
-		
+        
         int returnValue() { return 3; }
         float memberVariable = 3.14f;
     };
@@ -52,10 +52,10 @@ namespace Example
     {
         //an instance of the User-Defined Type named mf
         MyFoo mf;
-		
+        
         // 1) a std::cout statement that uses mf's member variables
-        std::cout << "mf returnValue(): " << mf.returnValue() << " and mf memberVariable: " << mf.memberVariable << std::endl; 
-		
+        std::cout << "mf returnValue(): " << mf.returnValue() << " and mf memberVariable: " << mf.memberVariable << std::endl;
+        
         // 2c) calling mf's member function.  the member function's body is almost identical to the cout statement above.
         mf.memberFunc();
         return 0;
@@ -67,33 +67,37 @@ namespace Example
 #include <string>
 
 
-#define PASSENGER_COEFF 0.0000005
-#define CAR_ON_MOTORWAY_COEFF 0.0000002
-#define MOTORBIKE_ON_MOTORWAY_COEFF 0.0000006
-#define LORRY_ON_MOTORWAY_COEFF 0.0000006
+#define PASSENGER_COEFF 0.5
+#define CAR_ON_MOTORWAY_COEFF 0.2
+#define MOTORBIKE_ON_MOTORWAY_COEFF 0.6
+#define LORRY_ON_MOTORWAY_COEFF 0.1
 
 struct Car
 {
-    Car(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_) 
+    Car(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+        
     }
-	
-    ~Car()
+ 
+    void memberFunc()
     {
-        std::cout << name << " was destroyed" << std::endl;
+            std::cout << "\nCar [Car name]: " << this->name << ", traveling at [Car getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Car passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
     }
-	
+    
     double getSpeed();
     void calculateAndPrintRisk();
+    std::string getName();
+    unsigned long getPassengers();
+  
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = {0.5, 0.7, 0.8, 0.8, 0.9};
 };
@@ -108,32 +112,46 @@ void Car::calculateAndPrintRisk()
     for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
         passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
-        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per million journeys\n"<< std::endl;
     }
+}
+
+std::string Car::getName()
+{
+    return name;
+}
+
+unsigned long Car::getPassengers()
+{
+    return passengers;
 }
 
 struct Motorbike
 {
-    Motorbike(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Motorbike(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+
     }
-	
-    ~Motorbike()
+
+
+    void memberFunc()
     {
-        std::cout << name << " was destroyed" << std::endl;
+            std::cout << "\nMotorbike [Motorbike name]: " << this->name << ", traveling at [Motorbike getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Motorbike passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
     }
-	
+    
     double getSpeed();
     void calculateAndPrintRisk();
+    std::string getName();
+    unsigned long getPassengers();
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 1.85, 1.95};
 };
@@ -148,32 +166,45 @@ void Motorbike::calculateAndPrintRisk()
     for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
         passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
-        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per million journeys\n"<< std::endl;
     }
+}
+std::string Motorbike::getName()
+{
+    return name;
+}
+
+unsigned long Motorbike::getPassengers()
+{
+    return passengers;
 }
 
 struct Lorry
 {
-    Lorry(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Lorry(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+
     }
-	
-    ~Lorry()
+
+
+    void memberFunc()
     {
-        std::cout << name << " was destroyed" << std::endl;
+            std::cout << "\nLorry [Lorry name]: " << this->name << ", traveling at [Lorry getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Lorry passengers]: " << this->passengers << " passengers: \n" << std::endl;
+            this->calculateAndPrintRisk();
     }
-	
+    
     double getSpeed();
     void calculateAndPrintRisk();
+    std::string getName();
+    unsigned long getPassengers();
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
 };
@@ -188,8 +219,17 @@ void Lorry::calculateAndPrintRisk()
     for(size_t i = 0; i < passengerRiskArray.size(); ++i)
     {
         passengerRiskArray[i] = riskCoeffArray[i] * speed * passengerRiskArray.size() * PASSENGER_COEFF;
-        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per journey"<< std::endl;
+        std::cout << "Risk to passenger " << i + 1 << " is: " << passengerRiskArray[i] << " measured in fatalities per million journeys\n"<< std::endl;
     }
+}
+std::string Lorry::getName()
+{
+    return name;
+}
+
+unsigned long Lorry::getPassengers()
+{
+    return passengers;
 }
 
 struct Motorway
@@ -252,47 +292,60 @@ void Motorway::calculateAndPrintChanceOfAccident()
     double avgSpeedLorries = sumSpeedLorries/lorriesArray.size();
     
     chanceOfAccident = avgSpeedCars * CAR_ON_MOTORWAY_COEFF +
-                        avgSpeedMotorbikes * MOTORBIKE_ON_MOTORWAY_COEFF +
-                        avgSpeedLorries * LORRY_ON_MOTORWAY_COEFF;
-            std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per hour" << std::endl;
+    avgSpeedMotorbikes * MOTORBIKE_ON_MOTORWAY_COEFF +
+    avgSpeedLorries * LORRY_ON_MOTORWAY_COEFF;
+    std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per million hours\n" << std::endl;
 }
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
-
+ 
  Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].
  
- If you didn't already: 
-    Make a pull request after you make your first commit
-    pin the pull request link and this repl.it link to our DM thread in a single message.
-
+ If you didn't already:
+ Make a pull request after you make your first commit
+ pin the pull request link and this repl.it link to our DM thread in a single message.
+ 
  send me a DM to review your pull request when the project is ready for review.
-
+ 
  Wait for my code review.
  */
 
-int main() 
+int main()
 {
-	Example::main();
-	
+    Example::main();
+    
     Car ford("ford", 70,3);
     Motorbike harley("harley", 80,2);
     Motorbike ducati("ducati", 110,1);
     Lorry bedford("bedford", 50,1);
     Car ferrari("ferrari", 90,2);
     Car vwGolf("vwGolf", 65,5);
-
-    ford.calculateAndPrintRisk();
-    harley.calculateAndPrintRisk();
-    bedford.calculateAndPrintRisk();
     
-    Motorway motorway;
-    motorway.addCar(&ford);
-    motorway.addCar(&ferrari);
-    motorway.addCar(&vwGolf);
-    motorway.addMotorBike(&harley);
-    motorway.addMotorBike(&ducati);
-    motorway.addLorry(&bedford);
-    motorway.calculateAndPrintChanceOfAccident();
+    std::cout << "\nCar [ford.getName()]: " << ford.getName() << ", traveling at [ford.getSpeed()]:" << ford.getSpeed() << "mph, has the following risk report when carrying [ford.getPassengers()]: " << ford.getPassengers() << " passengers: \n" << std::endl;
+    ford.calculateAndPrintRisk();
+
+    ford.memberFunc();
+    
+    std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]:" << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
+    harley.calculateAndPrintRisk();
+
+    harley.memberFunc();
+    
+    std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()]:" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
+    bedford.calculateAndPrintRisk();
+
+    bedford.memberFunc();   
+
+
+    
+     Motorway motorway;
+     motorway.addCar(&ford);
+     motorway.addCar(&ferrari);
+     motorway.addCar(&vwGolf);
+     motorway.addMotorBike(&harley);
+     motorway.addMotorBike(&ducati);
+     motorway.addLorry(&bedford);
+     motorway.calculateAndPrintChanceOfAccident();
     return 0;
 }
