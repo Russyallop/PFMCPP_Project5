@@ -74,20 +74,15 @@ namespace Example
 
 struct Car
 {
-    Car(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Car(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+        
     }
-    
-    ~Car()
-    {
-        std::cout << name << " was destroyed" << std::endl;
-    }
-
+ 
     void memberFunc()
     {
             std::cout << "\nCar [Car name]: " << this->name << ", traveling at [Car getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Car passengers]: " << this->passengers << " passengers: \n" << std::endl;
@@ -97,12 +92,12 @@ struct Car
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
-    int getPassengers();
+    unsigned long getPassengers();
   
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = {0.5, 0.7, 0.8, 0.8, 0.9};
 };
@@ -126,26 +121,22 @@ std::string Car::getName()
     return name;
 }
 
-int Car::getPassengers()
+unsigned long Car::getPassengers()
 {
     return passengers;
 }
 
 struct Motorbike
 {
-    Motorbike(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Motorbike(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+
     }
-    
-    ~Motorbike()
-    {
-        std::cout << name << " was destroyed" << std::endl;
-    }
+
 
     void memberFunc()
     {
@@ -156,11 +147,11 @@ struct Motorbike
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
-    int getPassengers();
+    unsigned long getPassengers();
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 1.85, 1.95};
 };
@@ -183,26 +174,22 @@ std::string Motorbike::getName()
     return name;
 }
 
-int Motorbike::getPassengers()
+unsigned long Motorbike::getPassengers()
 {
     return passengers;
 }
 
 struct Lorry
 {
-    Lorry(std::string name_, double speed_, int passengers_) : name(name_), speed(speed_), passengers(passengers_)
+    Lorry(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
     {
         for(size_t i = 0; i < passengers; ++i)
         {
             passengerRiskArray.push_back(0);
         }
-        std::cout << name << " was created" << std::endl;
+
     }
-    
-    ~Lorry()
-    {
-        std::cout << name << " was destroyed" << std::endl;
-    }
+
 
     void memberFunc()
     {
@@ -213,11 +200,11 @@ struct Lorry
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
-    int getPassengers();
+    unsigned long getPassengers();
 private:
     std::string name;
     double speed{0};
-    int passengers;
+    unsigned long passengers;
     std::vector<double> passengerRiskArray;
     std::vector<double> riskCoeffArray = { 0.2, 0.2, 0.2};
 };
@@ -240,7 +227,7 @@ std::string Lorry::getName()
     return name;
 }
 
-int Lorry::getPassengers()
+unsigned long Lorry::getPassengers()
 {
     return passengers;
 }
