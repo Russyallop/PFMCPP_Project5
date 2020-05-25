@@ -1,11 +1,11 @@
 /*
  Project 5: Part 3 / 4
- video: Chapter 3 Part 4: 
-
-Create a branch named Part3
-
+ video: Chapter 3 Part 4:
+ 
+ Create a branch named Part3
+ 
  the 'new' keyword
-
+ 
  1) add #include "LeakedObjectDetector.h" to main
  
  3) Add 'JUCE_LEAK_DETECTOR(OwnerClass)' at the end of your UDTs.
@@ -14,18 +14,18 @@ Create a branch named Part3
  
  5) write wrapper classes for each type similar to how it was shown in the video
  
- 7) update main() 
-      replace your objects with your wrapper classes, which have your UDTs as pointer member variables.
-      
-    This means if you had something like the following in your main() previously: 
-*/
+ 7) update main()
+ replace your objects with your wrapper classes, which have your UDTs as pointer member variables.
+ 
+ This means if you had something like the following in your main() previously:
+ */
 #if false
- Axe axe;
- std::cout << "axe sharpness: " << axe.sharpness << "\n";
- #endif
- /*
-    you would update that to use your wrappers:
-    
+Axe axe;
+std::cout << "axe sharpness: " << axe.sharpness << "\n";
+#endif
+/*
+ you would update that to use your wrappers:
+ 
  */
 
 #if false
@@ -33,9 +33,9 @@ AxeWrapper axWrapper( new Axe() );
 std::cout << "axe sharpness: " << axWrapper.axPtr->sharpness << "\n";
 #endif
 /*
-notice that the object name has changed from 'axe' to 'axWrapper'
-You don't have to do this, you can keep your current object name and just change its type to your Wrapper class
-
+ notice that the object name has changed from 'axe' to 'axWrapper'
+ You don't have to do this, you can keep your current object name and just change its type to your Wrapper class
+ 
  8) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  see here for an example: https://repl.it/@matkatmusic/ch3p04example
@@ -44,6 +44,7 @@ You don't have to do this, you can keep your current object name and just change
 #include <iostream>
 #include <vector>
 #include <string>
+#include "LeakedObjectDetector.h"
 
 
 #define PASSENGER_COEFF 0.5
@@ -61,18 +62,20 @@ struct Car
         }
         
     }
- 
+    
     void memberFunc()
     {
-            std::cout << "\nCar [Car name]: " << this->name << ", traveling at [Car getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Car passengers]: " << this->passengers << " passengers: \n" << std::endl;
-            this->calculateAndPrintRisk();
+        std::cout << "\nCar [Car name]: " << this->name << ", traveling at [Car getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Car passengers]: " << this->passengers << " passengers: \n" << std::endl;
+        this->calculateAndPrintRisk();
     }
     
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
     unsigned long getPassengers();
-  
+    
+    JUCE_LEAK_DETECTOR(Car)
+    
 private:
     std::string name;
     double speed{0};
@@ -105,6 +108,17 @@ unsigned long Car::getPassengers()
     return passengers;
 }
 
+struct CarWrapper
+{
+    CarWrapper( Car* carPtr_) : carPtr( carPtr_) {}
+    ~CarWrapper()
+    {
+        delete carPtr;
+    }
+    
+    Car* carPtr = nullptr;
+};
+
 struct Motorbike
 {
     Motorbike(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
@@ -113,20 +127,22 @@ struct Motorbike
         {
             passengerRiskArray.push_back(0);
         }
-
     }
-
-
+    
+    
     void memberFunc()
     {
-            std::cout << "\nMotorbike [Motorbike name]: " << this->name << ", traveling at [Motorbike getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Motorbike passengers]: " << this->passengers << " passengers: \n" << std::endl;
-            this->calculateAndPrintRisk();
+        std::cout << "\nMotorbike [Motorbike name]: " << this->name << ", traveling at [Motorbike getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Motorbike passengers]: " << this->passengers << " passengers: \n" << std::endl;
+        this->calculateAndPrintRisk();
     }
     
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
     unsigned long getPassengers();
+    
+    JUCE_LEAK_DETECTOR(Motorbike)
+    
 private:
     std::string name;
     double speed{0};
@@ -157,6 +173,16 @@ unsigned long Motorbike::getPassengers()
 {
     return passengers;
 }
+struct MotorbikeWrapper
+{
+    MotorbikeWrapper( Motorbike* MotorbikePtr_) : motorbikePtr( MotorbikePtr_) {}
+    ~MotorbikeWrapper()
+    {
+        delete motorbikePtr;
+    }
+    
+    Motorbike* motorbikePtr = nullptr;
+};
 
 struct Lorry
 {
@@ -166,20 +192,23 @@ struct Lorry
         {
             passengerRiskArray.push_back(0);
         }
-
+        
     }
-
-
+    
+    
     void memberFunc()
     {
-            std::cout << "\nLorry [Lorry name]: " << this->name << ", traveling at [Lorry getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Lorry passengers]: " << this->passengers << " passengers: \n" << std::endl;
-            this->calculateAndPrintRisk();
+        std::cout << "\nLorry [Lorry name]: " << this->name << ", traveling at [Lorry getSpeed()]:" << this->getSpeed() << "mph, has the following risk report when carrying [Lorry passengers]: " << this->passengers << " passengers: \n" << std::endl;
+        this->calculateAndPrintRisk();
     }
     
     double getSpeed();
     void calculateAndPrintRisk();
     std::string getName();
     unsigned long getPassengers();
+    
+    JUCE_LEAK_DETECTOR(Lorry)
+
 private:
     std::string name;
     double speed{0};
@@ -211,20 +240,26 @@ unsigned long Lorry::getPassengers()
     return passengers;
 }
 
+struct LorryWrapper
+{
+    LorryWrapper( Lorry* LorryPtr_) : lorryPtr( LorryPtr_) {}
+    ~LorryWrapper()
+    {
+        delete lorryPtr;
+    }
+    
+    Lorry* lorryPtr = nullptr;
+};
+
 struct Motorway
 {
-    Motorway()
-    {
-        std::cout << "MotorWay created" << std::endl;
-    }
-    ~Motorway()
-    {
-        std::cout << "MotorWay destroyed" << std::endl;
-    }
     void addCar(Car* car);
     void addMotorBike(Motorbike* motorbike);
     void addLorry(Lorry* lorry);
     void calculateAndPrintChanceOfAccident();
+    
+    JUCE_LEAK_DETECTOR(Motorway)
+
 private:
     std::vector<Car> carsArray;
     std::vector<Motorbike> motorbikesArray;
@@ -249,26 +284,41 @@ void Motorway::addLorry(Lorry* lorry)
 
 void Motorway::calculateAndPrintChanceOfAccident()
 {
+    double avgSpeedCars = 0;
     double sumSpeedCars = 0;
-    for(size_t i = 0; i < carsArray.size(); ++i)
+    if( carsArray.size() == 0 ) avgSpeedCars = 0;
+    else
     {
-        sumSpeedCars += carsArray[i].getSpeed();
+        for(size_t i = 0; i < carsArray.size(); ++i)
+        {
+            sumSpeedCars += carsArray[i].getSpeed();
+        }
+        avgSpeedCars = sumSpeedCars/carsArray.size();
     }
-    double avgSpeedCars = sumSpeedCars/carsArray.size();
-    
+
+    double avgSpeedMotorbikes =  0;
     double sumSpeedMotorbikes = 0;
-    for(size_t i = 0; i < motorbikesArray.size(); ++i)
+    if( motorbikesArray.size() == 0 ) avgSpeedMotorbikes = 0;
+    else
     {
-        sumSpeedMotorbikes += motorbikesArray[i].getSpeed();
+        for(size_t i = 0; i < motorbikesArray.size(); ++i)
+        {
+            sumSpeedMotorbikes += motorbikesArray[i].getSpeed();
+        }
+        avgSpeedMotorbikes = sumSpeedMotorbikes/motorbikesArray.size();
     }
-    double avgSpeedMotorbikes = sumSpeedMotorbikes/motorbikesArray.size();
     
+    double avgSpeedLorries =  0;
     double sumSpeedLorries = 0;
-    for(size_t i = 0; i < lorriesArray.size(); ++i)
+    if( lorriesArray.size() == 0 ) avgSpeedLorries = 0;
+    else
     {
-        sumSpeedLorries += lorriesArray[i].getSpeed();
+        for(size_t i = 0; i < lorriesArray.size(); ++i)
+        {
+            sumSpeedLorries += lorriesArray[i].getSpeed();
+        }
+        avgSpeedLorries = sumSpeedLorries/lorriesArray.size();
     }
-    double avgSpeedLorries = sumSpeedLorries/lorriesArray.size();
     
     chanceOfAccident = avgSpeedCars * CAR_ON_MOTORWAY_COEFF +
     avgSpeedMotorbikes * MOTORBIKE_ON_MOTORWAY_COEFF +
@@ -276,53 +326,93 @@ void Motorway::calculateAndPrintChanceOfAccident()
     std::cout << "Chance of an accident on this stretch of motorway is  " << chanceOfAccident << " measured in accidents per million hours\n" << std::endl;
 }
 
-/*
- MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
- 
- Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].
- 
- If you didn't already:
- Make a pull request after you make your first commit
- pin the pull request link and this repl.it link to our DM thread in a single message.
- 
- send me a DM to review your pull request when the project is ready for review.
- 
- Wait for my code review.
- */
+struct MotorwayWrapper
+{
+    MotorwayWrapper(Motorway* motorway_) : motorwayPtr(motorway_) {}
+    ~MotorwayWrapper()
+    {
+        delete motorwayPtr;
+    }
+    Motorway* motorwayPtr;
+};
+
 
 int main()
-{   
-    Car ford("ford", 70,3);
+{
+    std::cout <<"P1 stuff ===========================================\n";
+    /*Part 1 stuff =================================================================== */
+    Car ford("ford", 70, 3);
     Motorbike harley("harley", 80,2);
-    Motorbike ducati("ducati", 110,1);
     Lorry bedford("bedford", 50,1);
+    Motorbike ducati("ducati", 110,1);
     Car ferrari("ferrari", 90,2);
     Car vwGolf("vwGolf", 65,5);
     
+    Motorway motorway;
+    motorway.addCar(&ford);
+    motorway.addCar(&ferrari);
+    motorway.addCar(&vwGolf);
+    motorway.addMotorBike(&harley);
+    motorway.addMotorBike(&ducati);
+    motorway.addLorry(&bedford);
+    motorway.calculateAndPrintChanceOfAccident();
+    
+    
+    
+    std::cout <<" \n\n\n\n\n\n\n\nP2 stuff ===========================================\n";
+    /*Part 2 stuff =================================================================== */
+    
     std::cout << "\nCar [ford.getName()]: " << ford.getName() << ", traveling at [ford.getSpeed()]:" << ford.getSpeed() << "mph, has the following risk report when carrying [ford.getPassengers()]: " << ford.getPassengers() << " passengers: \n" << std::endl;
     ford.calculateAndPrintRisk();
-
+    
     ford.memberFunc();
     
-    std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]:" << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
+    std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]: " << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
     harley.calculateAndPrintRisk();
-
+    
     harley.memberFunc();
     
-    std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()]:" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
+    std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()] :" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
     bedford.calculateAndPrintRisk();
-
-    bedford.memberFunc();   
-
-
     
-     Motorway motorway;
-     motorway.addCar(&ford);
-     motorway.addCar(&ferrari);
-     motorway.addCar(&vwGolf);
-     motorway.addMotorBike(&harley);
-     motorway.addMotorBike(&ducati);
-     motorway.addLorry(&bedford);
-     motorway.calculateAndPrintChanceOfAccident();
+    bedford.memberFunc();
+    
+    
+    
+    std::cout <<" \n\n\n\n\n\n\n\nP3 stuff ===========================================\n";
+    /*Part 3 stuff =================================================================== */
+    
+    CarWrapper fordWrapper( new Car( "ford_wrapper", 70, 3 ));
+    MotorbikeWrapper harleyWrapper( new Motorbike("harley_wrapper", 80, 2 ));
+    LorryWrapper bedfordWrapper( new Lorry( "bedford_wrapper", 55, 1 ));
+    
+    std::cout << "\nCar [ford_Wrapper.carPtr->getName()]: " << fordWrapper.carPtr->getName()
+    << ", traveling at [fordWrapper.carPtr->getSpeed()]: " << fordWrapper.carPtr->getSpeed()
+    << "mph, has the following risk report when carrying [fordWrapper.carPtr->getPassengers()]: " << fordWrapper.carPtr->getPassengers()
+    << " passengers: \n" << std::endl;
+    fordWrapper.carPtr->calculateAndPrintRisk();
+    
+    std::cout << "\nMotorbike [harley_Wrapper.motorbikePtr->getName()]: " << harleyWrapper.motorbikePtr->getName()
+    << ", traveling at [harleyWrapper.motorbikePtr->getSpeed()]: " << harleyWrapper.motorbikePtr->getSpeed()
+    << "mph, has the following risk report when carrying [harleyWrapper.motorbikePtr->getPassengers()]: "
+    << harleyWrapper.motorbikePtr->getPassengers() << " passengers: \n" << std::endl;
+    harleyWrapper.motorbikePtr->calculateAndPrintRisk();
+    
+    std::cout << "\nLorry [bedford_Wrapper.lorryPtr->getName()]: " << bedfordWrapper.lorryPtr->getName()
+    << ", traveling at [bedfordWrapper.lorryPtr->getSpeed()]: " << bedfordWrapper.lorryPtr->getSpeed()
+    << "mph, has the following risk report when carrying [bedfordWrapper.lorryPtr->getPassengers()]: "
+    << bedfordWrapper.lorryPtr->getPassengers() << " passengers: \n" << std::endl;
+    bedfordWrapper.lorryPtr->calculateAndPrintRisk();
+    
+    MotorwayWrapper motorwayWrapper( new Motorway());
+    motorwayWrapper.motorwayPtr->addCar( fordWrapper.carPtr );
+    motorwayWrapper.motorwayPtr->addMotorBike( harleyWrapper.motorbikePtr );
+    motorwayWrapper.motorwayPtr->calculateAndPrintChanceOfAccident();
+    
+
     return 0;
 }
+
+
+
+
