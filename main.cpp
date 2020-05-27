@@ -1,11 +1,11 @@
 /*
  Project 5: Part 3 / 4
- video: Chapter 3 Part 4:
- 
- Create a branch named Part3
- 
+ video: Chapter 3 Part 4: 
+
+Create a branch named Part3
+
  the 'new' keyword
- 
+
  1) add #include "LeakedObjectDetector.h" to main
  
  3) Add 'JUCE_LEAK_DETECTOR(OwnerClass)' at the end of your UDTs.
@@ -14,18 +14,18 @@
  
  5) write wrapper classes for each type similar to how it was shown in the video
  
- 7) update main()
- replace your objects with your wrapper classes, which have your UDTs as pointer member variables.
- 
- This means if you had something like the following in your main() previously:
- */
+ 7) update main() 
+      replace your objects with your wrapper classes, which have your UDTs as pointer member variables.
+      
+    This means if you had something like the following in your main() previously: 
+*/
 #if false
-Axe axe;
-std::cout << "axe sharpness: " << axe.sharpness << "\n";
-#endif
-/*
- you would update that to use your wrappers:
- 
+ Axe axe;
+ std::cout << "axe sharpness: " << axe.sharpness << "\n";
+ #endif
+ /*
+    you would update that to use your wrappers:
+    
  */
 
 #if false
@@ -33,13 +33,15 @@ AxeWrapper axWrapper( new Axe() );
 std::cout << "axe sharpness: " << axWrapper.axPtr->sharpness << "\n";
 #endif
 /*
- notice that the object name has changed from 'axe' to 'axWrapper'
- You don't have to do this, you can keep your current object name and just change its type to your Wrapper class
- 
+notice that the object name has changed from 'axe' to 'axWrapper'
+You don't have to do this, you can keep your current object name and just change its type to your Wrapper class
+
  8) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  see here for an example: https://repl.it/@matkatmusic/ch3p04example
  */
+
+
 
 #include <iostream>
 #include <vector>
