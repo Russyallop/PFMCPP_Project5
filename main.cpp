@@ -341,48 +341,7 @@ struct MotorwayWrapper
 
 int main()
 {
-    std::cout <<"P1 stuff ===========================================\n";
-    /*Part 1 stuff =================================================================== */
-    Car ford("ford", 70, 3);
-    Motorbike harley("harley", 80,2);
-    Lorry bedford("bedford", 50,1);
-    Motorbike ducati("ducati", 110,1);
-    Car ferrari("ferrari", 90,2);
-    Car vwGolf("vwGolf", 65,5);
-    
-    Motorway motorway;
-    motorway.addCar(&ford);
-    motorway.addCar(&ferrari);
-    motorway.addCar(&vwGolf);
-    motorway.addMotorBike(&harley);
-    motorway.addMotorBike(&ducati);
-    motorway.addLorry(&bedford);
-    motorway.calculateAndPrintChanceOfAccident();
-    
-    
-    
-    std::cout <<" \n\n\n\n\n\n\n\nP2 stuff ===========================================\n";
-    /*Part 2 stuff =================================================================== */
-    
-    std::cout << "\nCar [ford.getName()]: " << ford.getName() << ", traveling at [ford.getSpeed()]:" << ford.getSpeed() << "mph, has the following risk report when carrying [ford.getPassengers()]: " << ford.getPassengers() << " passengers: \n" << std::endl;
-    ford.calculateAndPrintRisk();
-    
-    ford.memberFunc();
-    
-    std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]: " << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
-    harley.calculateAndPrintRisk();
-    
-    harley.memberFunc();
-    
-    std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()] :" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
-    bedford.calculateAndPrintRisk();
-    
-    bedford.memberFunc();
-    
-    
-    
-    std::cout <<" \n\n\n\n\n\n\n\nP3 stuff ===========================================\n";
-    /*Part 3 stuff =================================================================== */
+
     
     CarWrapper fordWrapper( new Car( "ford_wrapper", 70, 3 ));
     MotorbikeWrapper harleyWrapper( new Motorbike("harley_wrapper", 80, 2 ));
@@ -414,3 +373,4 @@ int main()
 
     return 0;
 }
+
