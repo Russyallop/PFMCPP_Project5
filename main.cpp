@@ -341,36 +341,37 @@ struct MotorwayWrapper
 
 int main()
 {
+    Car ford("ford", 70,3);
+    Motorbike harley("harley", 80,2);
+    Motorbike ducati("ducati", 110,1);
+    Lorry bedford("bedford", 50,1);
+    Car ferrari("ferrari", 90,2);
+    Car vwGolf("vwGolf", 65,5);
+    
+    std::cout << "\nCar [ford.getName()]: " << ford.getName() << ", traveling at [ford.getSpeed()]:" << ford.getSpeed() << "mph, has the following risk report when carrying [ford.getPassengers()]: " << ford.getPassengers() << " passengers: \n" << std::endl;
+    ford.calculateAndPrintRisk();
 
+    ford.memberFunc();
     
-    CarWrapper fordWrapper( new Car( "ford_wrapper", 70, 3 ));
-    MotorbikeWrapper harleyWrapper( new Motorbike("harley_wrapper", 80, 2 ));
-    LorryWrapper bedfordWrapper( new Lorry( "bedford_wrapper", 55, 1 ));
-    
-    std::cout << "\nCar [ford_Wrapper.carPtr->getName()]: " << fordWrapper.carPtr->getName()
-    << ", traveling at [fordWrapper.carPtr->getSpeed()]: " << fordWrapper.carPtr->getSpeed()
-    << "mph, has the following risk report when carrying [fordWrapper.carPtr->getPassengers()]: " << fordWrapper.carPtr->getPassengers()
-    << " passengers: \n" << std::endl;
-    fordWrapper.carPtr->calculateAndPrintRisk();
-    
-    std::cout << "\nMotorbike [harley_Wrapper.motorbikePtr->getName()]: " << harleyWrapper.motorbikePtr->getName()
-    << ", traveling at [harleyWrapper.motorbikePtr->getSpeed()]: " << harleyWrapper.motorbikePtr->getSpeed()
-    << "mph, has the following risk report when carrying [harleyWrapper.motorbikePtr->getPassengers()]: "
-    << harleyWrapper.motorbikePtr->getPassengers() << " passengers: \n" << std::endl;
-    harleyWrapper.motorbikePtr->calculateAndPrintRisk();
-    
-    std::cout << "\nLorry [bedford_Wrapper.lorryPtr->getName()]: " << bedfordWrapper.lorryPtr->getName()
-    << ", traveling at [bedfordWrapper.lorryPtr->getSpeed()]: " << bedfordWrapper.lorryPtr->getSpeed()
-    << "mph, has the following risk report when carrying [bedfordWrapper.lorryPtr->getPassengers()]: "
-    << bedfordWrapper.lorryPtr->getPassengers() << " passengers: \n" << std::endl;
-    bedfordWrapper.lorryPtr->calculateAndPrintRisk();
-    
-    MotorwayWrapper motorwayWrapper( new Motorway());
-    motorwayWrapper.motorwayPtr->addCar( fordWrapper.carPtr );
-    motorwayWrapper.motorwayPtr->addMotorBike( harleyWrapper.motorbikePtr );
-    motorwayWrapper.motorwayPtr->calculateAndPrintChanceOfAccident();
-    
+    std::cout << "\nMotorbike [harley.getName()]: " << harley.getName() << ", traveling at [harley.getSpeed()]:" << harley.getSpeed() << "mph, has the following risk report when carrying [harley.getPassengers()]: " << harley.getPassengers() << " passengers: \n" << std::endl;
+    harley.calculateAndPrintRisk();
 
+    harley.memberFunc();
+    
+    std::cout << "\nLorry [bedford.getName()]: " << bedford.getName() << ", traveling at [bedford.getSpeed()]:" << bedford.getSpeed() << "mph, has the following risk report when carrying [bedford.getPassengers()]: " << bedford.getPassengers() << " passengers: \n" << std::endl;
+    bedford.calculateAndPrintRisk();
+
+    bedford.memberFunc();   
+ 
+    Motorway motorway;
+    motorway.addCar(&ford);
+    motorway.addCar(&ferrari);
+    motorway.addCar(&vwGolf);
+    motorway.addMotorBike(&harley);
+    motorway.addMotorBike(&ducati);
+    motorway.addLorry(&bedford);
+    motorway.calculateAndPrintChanceOfAccident();
+   
     return 0;
 }
 
