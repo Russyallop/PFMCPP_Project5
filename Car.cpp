@@ -1,11 +1,13 @@
 #include "Car.h"
 
+#include <iostream>
+
 Car::Car(std::string name_, double speed_, unsigned long passengers_) : name(name_), speed(speed_), passengers(passengers_)
 {
     for(size_t i = 0; i < passengers; ++i)
     {
         passengerRiskArray.push_back(0);
-    }       
+    } 
 }
     
 void Car::memberFunc()

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <iostream>
+
 #include <vector>
 #include <string>
 
@@ -25,9 +25,9 @@ struct Motorway
     JUCE_LEAK_DETECTOR(Motorway)
 
 private:
-    std::vector<Car> carsArray;
-    std::vector<Motorbike> motorbikesArray;
-    std::vector<Lorry> lorriesArray;
+    std::vector<Car*> carsArray;
+    std::vector<Motorbike*> motorbikesArray;
+    std::vector<Lorry*> lorriesArray;
     double chanceOfAccident;
 };
 

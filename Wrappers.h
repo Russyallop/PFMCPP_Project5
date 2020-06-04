@@ -2,10 +2,15 @@
 
 #pragma once
 
-#include "Car.h"
-#include "Motorbike.h"
-#include "Lorry.h"
+// #include "Car.h"
+// #include "Motorbike.h"
+// #include "Lorry.h"
 #include "Motorway.h"
+
+struct Car;
+struct Motorbike;
+struct Lorry;
+struct Motorway;
 
 struct CarWrapper
 {
@@ -33,8 +38,8 @@ struct LorryWrapper
 
 struct MotorwayWrapper
 {
-    MotorwayWrapper(Motorway* motorway_);
+    MotorwayWrapper(Motorway* motorwayPtr_);
     ~MotorwayWrapper();
     
-    Motorway* motorwayPtr;
+    Motorway* motorwayPtr = nullptr;
 };
